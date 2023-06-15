@@ -41,6 +41,8 @@ class ChatService(val userRepository: UserRepository, val chatRepository: ChatRe
     }
 
     fun getChats(dto: ChatsGet): List<Chat> {
-        return chatRepository.findAllByUsersUserId(dto.user)
+        if(dto.user == null)
+            throw BadRequestException("empty user")
+        return chatRepository.findAllByUsersUserId(dto.user!!)
     }
 }
